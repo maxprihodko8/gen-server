@@ -1,16 +1,18 @@
 import express from "express";
-import Gen from 'gen';
+import Gen from 'gen/index.js';
 import dotenv from 'dotenv';
 import fs from 'fs';
-import RedisStrategy from "gen/storage/redis";
+import RedisStrategy from "gen/stratege/redis.js";
 
 dotenv.config();
 const router = express.Router();
 
-const stream = fs.createReadStream(process.env.GEN_FILE);
-const strategy = new RedisStrategy(stream);
+const strategy = new RedisStrategy();
 const gen = new Gen(strategy);
-gen.read()
+
+const stream = fs.createReadStream(process.env.GEN_FILE);
+strategy
+  .read(stream)
   .then()
   .catch(e => console.log(e));
 
