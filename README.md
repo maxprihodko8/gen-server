@@ -6,3 +6,4 @@ Caveats:
 - uses Redis
 - may not find the required gen if the file is large, and the API is still loading file
 - to defy if the data is loaded you can use the /genes/loading-check
+- Redis is not clean after all
