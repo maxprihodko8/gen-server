@@ -2,7 +2,7 @@ import express from "express";
 import Gen from 'gen/index.js';
 import dotenv from 'dotenv';
 import fs from 'fs';
-import RedisStrategy from "gen/stratege/redis.js";
+import RedisStrategy from "gen/strategy/redis.js";
 
 dotenv.config();
 const router = express.Router();
@@ -11,9 +11,12 @@ const strategy = new RedisStrategy();
 const gen = new Gen(strategy);
 
 const stream = fs.createReadStream(process.env.GEN_FILE);
+let hasLoaded = false;
 strategy
   .read(stream)
-  .then()
+  .then(() => {
+    hasLoaded = true;
+  })
   .catch(e => console.log(e));
 
 /**
@@ -33,6 +36,12 @@ router.get('/find/:query', async (req, res) => {
   }
 
   res.send(404);
+});
+
+router.get('/loading-check', (req, res) => {
+  res.send({
+    loaded: hasLoaded,
+  });
 });
 
 export default router;
