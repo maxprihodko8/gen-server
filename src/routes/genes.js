@@ -27,15 +27,15 @@ router.get('/find/:query', async (req, res) => {
 
   if (query) {
     if (!gen.isGen(query)) { // the gen is not valid
-      return res.send(400);
+      return res.sendStatus(400);
     }
 
     if (await gen.isExists(query)) {
-      return res.send(200);
+      return res.sendStatus(200);
     }
   }
 
-  res.send(404);
+  res.sendStatus(404);
 });
 
 router.get('/loading-check', (req, res) => {
