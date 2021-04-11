@@ -16,6 +16,9 @@ strategy
   .then()
   .catch(e => console.log(e));
 
+/**
+ * Find if the gen is located in the file
+ */
 router.get('/find/:query', async (req, res) => {
   const query = req.params.query;
 
